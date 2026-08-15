@@ -54,6 +54,7 @@ public class crystalline_heart extends Item implements ICurioItem {
         // 首次穿上时初始化：记录最大护盾和基础生命值减少量
         if (!tag.contains(NB_TAG_MAX_SHIELD)) {
             double currentMaxHealth = player.getMaxHealth();
+            double playerArmor =player.getArmorValue();
             // 被减少的生命值 = currentMaxHealth / 0.2 * 0.8 = currentMaxHealth * 4
             double healthReduction = currentMaxHealth * 4.0;
             tag.putDouble(NB_TAG_HEALTH_REDUCTION, healthReduction);
