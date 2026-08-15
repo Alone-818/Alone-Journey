@@ -23,8 +23,6 @@ import java.util.Optional;
 
 @Mod.EventBusSubscriber(modid = Alone818.com.alone_journey.Alone_journey.MODID)
 public class ShieldEvent {
-    private static final Logger LOGGER = LogUtils.getLogger();
-
     // 回复冷却时间间隔（以tick为单位，1秒=20 tick。例如 10 秒 = 200 tick）
     private static final int HEAL_INTERVAL_TICKS = 200;
 
