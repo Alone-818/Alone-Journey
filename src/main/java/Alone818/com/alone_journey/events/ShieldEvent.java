@@ -25,6 +25,7 @@ import java.util.Optional;
 public class ShieldEvent {
     // 回复冷却时间间隔（以tick为单位，1秒=20 tick。例如 10 秒 = 200 tick）
     private static final int HEAL_INTERVAL_TICKS = 200;
+    private static final int ARMOR_TO_SHIELD = 5;
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent event) {
@@ -110,7 +111,7 @@ public class ShieldEvent {
         ItemStack stack = slotResult.stack();
         CompoundTag tag = stack.getOrCreateTag();
 
-        double maxShield = tag.getDouble(crystalline_heart.NB_TAG_MAX_SHIELD)+playerArmor/4;
+        double maxShield = tag.getDouble(crystalline_heart.NB_TAG_MAX_SHIELD)+playerArmor/ARMOR_TO_SHIELD;
         double currentShield = tag.getDouble(crystalline_heart.NB_TAG_SHIELD);
 
         // 如果当前护盾已经满了，重置计时器为当前时间并返回
