@@ -1,0 +1,11 @@
+{
+  "item.alone_journey.crystalline_heart": "Crystalline Heart",
+  "item.alone_journey.crystalline_heart.tooltip.desc": "A heart condensed from crystal, the crystals on it still shifting in color.",
+  "item.alone_journey.crystalline_heart.tooltip.heal_desc": "Regenerates 1 shield every 10 seconds after taking damage",
+  "item.alone_journey.crystalline_heart.tooltip.armor_bonus": "Higher armor and armor toughness increase shield capacity and regen speed",
+  "item.alone_journey.bleedingshield": "Bleeding Shield",
+  "item.alone_journey.bleedingshield.tooltip.desc": "A shield forged from congealed blood, the blood still seeks to erode its wielder.",
+  "item.alone_journey.bleedingshield.tooltip.toughness_desc": "Every 2 armor points or 1 health point sacrificed converts to 1 armor toughness",
+  "tab.alone_journey.curios": "Alone Journey: Curios",
+  "tooltip.alone_journey.press_shift": "Press [Shift] for more info"
+}

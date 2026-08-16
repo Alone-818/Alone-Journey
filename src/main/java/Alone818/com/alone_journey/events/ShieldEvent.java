@@ -3,6 +3,7 @@ package Alone818.com.alone_journey.events;
 import Alone818.com.alone_journey.Itemcuiros.crystalline_heart;
 import Alone818.com.alone_journey.init.ModItems;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,6 +32,11 @@ public class ShieldEvent {
 
         // 只对玩家生效护盾
         if (!(entity instanceof Player player)) {
+            return;
+        }
+
+        // /kill（genericKill）和虚空坠落等无视无敌保护的伤害不能被护盾免疫，必须放行
+        if (event.getSource().is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             return;
         }
 
@@ -105,14 +111,45 @@ public class ShieldEvent {
         if (crystalOpt.isEmpty()) {
             return;
         }
+
+        // 兜底：瞬时修饰符不会写入存档，重登录等情况丢失时在此重新应用（幂等，不会叠加）
+        crystalline_heart.applyMaxHealthPenalty(player);
+        // 持续约束：生命值超过新上限（原最大生命值的 20%）时扣血到上限
+        crystalline_heart.clampHealthToMax(player);
+
         double playerArmor =player.getArmorValue();
         double playerToughness=player.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
         SlotResult slotResult = crystalOpt.get();
         ItemStack stack = slotResult.stack();
         CompoundTag tag = stack.getOrCreateTag();
 
-        double maxShield = tag.getDouble(crystalline_heart.NB_TAG_MAX_SHIELD)+playerArmor/ARMOR_TO_SHIELD;
+        // 动态检测玩家血量：基础最大护盾随当前最大生命值实时变化（替代首次佩戴时冻结的 NBT 值）
+        double baseMaxShield = crystalline_heart.getBaseMaxShield(player);
+        double maxShield = baseMaxShield + playerArmor / ARMOR_TO_SHIELD;
         double currentShield = tag.getDouble(crystalline_heart.NB_TAG_SHIELD);
+
+        boolean changed = false;
+        // 将动态计算的基础最大护盾同步到 NBT，便于客户端 GUI 等读取
+        if (Math.abs(tag.getDouble(crystalline_heart.NB_TAG_MAX_SHIELD) - baseMaxShield) > 1e-6) {
+            tag.putDouble(crystalline_heart.NB_TAG_MAX_SHIELD, baseMaxShield);
+            changed = true;
+        }
+        // 生命值降低导致护盾超出新上限时，削减护盾到新上限
+        if (currentShield > maxShield) {
+            currentShield = maxShield;
+            tag.putDouble(crystalline_heart.NB_TAG_SHIELD, currentShield);
+            changed = true;
+        }
+        if (changed) {
+            stack.setTag(tag);
+
+            // 写回槽位
+            String slotTypeId = slotResult.slotContext().identifier();
+            int index = slotResult.slotContext().index();
+            CuriosApi.getCuriosInventory(player).ifPresent(handler -> {
+                handler.setEquippedCurio(slotTypeId, index, stack);
+            });
+        }
 
         // 如果当前护盾已经满了，重置计时器为当前时间并返回
         if (currentShield >= maxShield) {

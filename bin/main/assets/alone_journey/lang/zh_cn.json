@@ -1,0 +1,11 @@
+{
+  "item.alone_journey.crystalline_heart": "结晶心脏",
+  "item.alone_journey.crystalline_heart.tooltip.desc": "由水晶凝结而成的心脏，上面的晶体仍然变化着色彩。",
+  "item.alone_journey.crystalline_heart.tooltip.heal_desc": "受伤后每 10 秒回复 1 点护盾",
+  "item.alone_journey.crystalline_heart.tooltip.armor_bonus": "更高的护甲与护甲韧性可提升护盾上限与恢复速度",
+  "item.alone_journey.bleedingshield": "流血护盾",
+  "item.alone_journey.bleedingshield.tooltip.desc": "由鲜血凝结而成的盾牌，上面的血仍然试图侵蚀持有者。",
+  "item.alone_journey.bleedingshield.tooltip.toughness_desc": "每减少 2 点护甲或每减少 1 点生命，转化为 1 点护甲韧性",
+  "tab.alone_journey.curios": "孤独旅程：饰品",
+  "tooltip.alone_journey.press_shift": "按下 [Shift] 获取更多信息"
+}
