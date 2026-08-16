@@ -32,7 +32,7 @@ public class ModCreativeModeTabs {
                             .displayItems((itemDisplayParameters,
                                            output) -> {
                                 output.accept(ModItems.CRYSTALLINE_HEART.get());
-
+                                output.accept(ModItems.BLEEDINGSHIELD.get());
                             })
 
                             // 构建最终的 CreativeModeTab 实例。

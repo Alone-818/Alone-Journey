@@ -1,7 +1,8 @@
 package Alone818.com.alone_journey.init;
 
 import Alone818.com.alone_journey.Alone_journey;
-import Alone818.com.alone_journey.Itemcuiros.*;
+import Alone818.com.alone_journey.Itemcuiros.bleedingshield;
+import Alone818.com.alone_journey.Itemcuiros.crystalline_heart;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -13,6 +14,8 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, Alone_journey.MODID);
     public static final RegistryObject<Item> CRYSTALLINE_HEART =
             ITEMS.register("crystalline_heart",()-> new crystalline_heart());
+    public static final RegistryObject<Item> BLEEDINGSHIELD =
+            ITEMS.register("bleedingshield",()->new bleedingshield());
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

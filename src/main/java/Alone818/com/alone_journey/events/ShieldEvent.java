@@ -2,7 +2,6 @@ package Alone818.com.alone_journey.events;
 
 import Alone818.com.alone_journey.Itemcuiros.crystalline_heart;
 import Alone818.com.alone_journey.init.ModItems;
-import com.mojang.logging.LogUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -14,10 +13,9 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.slf4j.Logger;
+import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 import top.theillusivec4.curios.api.type.util.ICuriosHelper;
-import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.Optional;
 
@@ -72,7 +70,8 @@ public class ShieldEvent {
 
         // 伤害发生时重置/刷新上次回复时间，防止受伤后立即回盾，或者保持原来的逻辑
         // 我们选择不清除它，或者把它设置为当前时间以开始下一次回复周期的倒计时
-        tag.putLong(crystalline_heart.NB_TAG_LAST_HEAL, player.level().getGameTime());
+        net.minecraft.world.level.Level level = player.level();
+        tag.putLong(crystalline_heart.NB_TAG_LAST_HEAL, level.getGameTime());
 
         stack.setTag(tag);
 
@@ -95,7 +94,8 @@ public class ShieldEvent {
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         // 只在服务器端且在Tick的END阶段进行计算，避免双倍运行
-        if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide()) {
+        net.minecraft.world.level.Level level = event.player.level();
+        if (event.phase != TickEvent.Phase.END || level.isClientSide()) {
             return;
         }
 
@@ -116,11 +116,11 @@ public class ShieldEvent {
 
         // 如果当前护盾已经满了，重置计时器为当前时间并返回
         if (currentShield >= maxShield) {
-            tag.putLong(crystalline_heart.NB_TAG_LAST_HEAL, player.level().getGameTime());
+            tag.putLong(crystalline_heart.NB_TAG_LAST_HEAL, level.getGameTime());
             return;
         }
 
-        long gameTime = player.level().getGameTime();
+        long gameTime = level.getGameTime();
         if (!tag.contains(crystalline_heart.NB_TAG_LAST_HEAL)) {
             // 如果不存在上次回复时间，初始化为当前时间
             tag.putLong(crystalline_heart.NB_TAG_LAST_HEAL, gameTime);

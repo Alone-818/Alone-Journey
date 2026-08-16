@@ -2,16 +2,22 @@ package Alone818.com.alone_journey.Itemcuiros;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
+import java.util.List;
 import java.util.UUID;
 
 public class crystalline_heart extends Item implements ICurioItem {
@@ -74,4 +80,17 @@ public class crystalline_heart extends Item implements ICurioItem {
      */
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {}
-}
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+
+            tooltip.add(Component.translatable("item.alone_journey.crystalline_heart.tooltip.desc")
+                    .withStyle(ChatFormatting.LIGHT_PURPLE));
+            tooltip.add(Component.translatable("item.alone_journey.crystalline_heart.tooltip.heal_desc")
+                    .withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("item.alone_journey.crystalline_heart.tooltip.armor_bonus")
+                    .withStyle(ChatFormatting.GRAY));
+
+
+
+    }}
