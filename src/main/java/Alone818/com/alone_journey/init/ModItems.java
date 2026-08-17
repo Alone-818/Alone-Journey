@@ -1,6 +1,9 @@
 package Alone818.com.alone_journey.init;
 
 import Alone818.com.alone_journey.Alone_journey;
+import Alone818.com.alone_journey.Items.painstrike_hammer;
+import Alone818.com.alone_journey.Items.parryshield;
+import Alone818.com.alone_journey.Itemcuiros.adaptive_flesh;
 import Alone818.com.alone_journey.Itemcuiros.bleedingshield;
 import Alone818.com.alone_journey.Itemcuiros.crystalline_heart;
 import net.minecraft.world.item.Item;
@@ -16,6 +19,12 @@ public class ModItems {
             ITEMS.register("crystalline_heart",()-> new crystalline_heart());
     public static final RegistryObject<Item> BLEEDINGSHIELD =
             ITEMS.register("bleedingshield",()->new bleedingshield());
+    public static final RegistryObject<Item> ADAPTIVE_FLESH =
+            ITEMS.register("adaptive_flesh",()->new adaptive_flesh());
+    public static final RegistryObject<Item> PARRY_SHIELD =
+            ITEMS.register("parryshield",()->new parryshield());
+    public static final RegistryObject<Item> PAINSTRIKE_HAMMER =
+            ITEMS.register("painstrike_hammer",()->new painstrike_hammer());
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

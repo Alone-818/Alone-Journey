@@ -6,6 +6,17 @@
   "item.alone_journey.bleedingshield": "Bleeding Shield",
   "item.alone_journey.bleedingshield.tooltip.desc": "A shield forged from congealed blood, the blood still seeks to erode its wielder.",
   "item.alone_journey.bleedingshield.tooltip.toughness_desc": "Every 2 armor points or 1 health point sacrificed converts to 1 armor toughness",
+  "item.alone_journey.adaptive_flesh": "Adaptive Flesh",
+  "item.alone_journey.adaptive_flesh.tooltip.desc": "A squirming piece of living tissue that seems to learn alongside your pain.",
+  "item.alone_journey.adaptive_flesh.tooltip.mechanism_desc": "Each hit of a damage type grants 1 layer of adaptation (15% per layer, max 5); taking a different damage type decays all existing layers by 1",
+  "item.alone_journey.parryshield": "Parry Shield",
+  "item.alone_journey.parryshield.tooltip.desc": "Raise this shield at the moment an enemy strike lands for a perfect defense.",
+  "item.alone_journey.parryshield.tooltip.parry_desc": "Block within 1s of raising: full immunity, reflects 70% damage and weakens the attacker for 3s (1s parry cooldown)",
+  "item.alone_journey.parryshield.tooltip.block_desc": "Held up longer: absorbs 80% of the damage",
+  "item.alone_journey.painstrike_hammer": "Painstrike Hammer",
+  "item.alone_journey.painstrike_hammer.tooltip.desc": "A heavy war hammer; swinging it demands a toll in rhythm.",
+  "item.alone_journey.painstrike_hammer.tooltip.charge_desc": "Hits inflict Vulnerability for 10s; repeat hits extend 5s and add +1 level. Each triggered hit deals +50% damage and removes one level",
   "tab.alone_journey.curios": "Alone Journey: Curios",
-  "tooltip.alone_journey.press_shift": "Press [Shift] for more info"
+  "tab.alone_journey.tools": "Alone Journey: Tools",
+  "effect.alone_journey.vulnerability": "Vulnerability"
 }

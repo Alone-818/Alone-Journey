@@ -15,7 +15,7 @@ public class ModCreativeModeTabs {
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Alone_journey.MODID);
 
     // 注册本模组的创造模式标签。
-    public static final RegistryObject<CreativeModeTab> ALONEITEMS =
+    public static final RegistryObject<CreativeModeTab> ALONECURIOS =
             CREATIVE_MODE_TABS.register("alone_journey.curios",
                     () -> CreativeModeTab.builder()
 
@@ -33,6 +33,28 @@ public class ModCreativeModeTabs {
                                            output) -> {
                                 output.accept(ModItems.CRYSTALLINE_HEART.get());
                                 output.accept(ModItems.BLEEDINGSHIELD.get());
+                                output.accept(ModItems.ADAPTIVE_FLESH.get());
+                            })
+
+                            // 构建最终的 CreativeModeTab 实例。
+                            .build());
+
+    // 工具类物品的创造模式标签。
+    public static final RegistryObject<CreativeModeTab> ALONETOOLS =
+            CREATIVE_MODE_TABS.register("alone_journey.tools",
+                    () -> CreativeModeTab.builder()
+
+                            // 设置创造标签在界面中显示的图标。
+                            .icon(() -> new ItemStack(ModItems.PARRY_SHIELD.get()))
+
+                            // 设置标签的显示名称。
+                            .title(Component.translatable("tab.alone_journey.tools"))
+
+                            // 定义该标签中显示的物品内容。
+                            .displayItems((itemDisplayParameters,
+                                           output) -> {
+                                output.accept(ModItems.PARRY_SHIELD.get());
+                                output.accept(ModItems.PAINSTRIKE_HAMMER.get());
                             })
 
                             // 构建最终的 CreativeModeTab 实例。

@@ -6,6 +6,19 @@
   "item.alone_journey.bleedingshield": "流血护盾",
   "item.alone_journey.bleedingshield.tooltip.desc": "由鲜血凝结而成的盾牌，上面的血仍然试图侵蚀持有者。",
   "item.alone_journey.bleedingshield.tooltip.toughness_desc": "每减少 2 点护甲或每减少 1 点生命，转化为 1 点护甲韧性",
+
+  "item.alone_journey.adaptive_flesh": "自适应血肉",
+  "item.alone_journey.adaptive_flesh.tooltip.desc": "一块不断蠕动的活体组织，似乎在与你的伤痛一同学习。",
+  "item.alone_journey.adaptive_flesh.tooltip.mechanism_desc": "受到某种类型的伤害获得 1 层适应（每层减免 15%，最高 5 层）；受到其他类型伤害时，已有层数各衰减 1 层",
+  "item.alone_journey.parryshield": "招架之盾",
+  "item.alone_journey.parryshield.tooltip.desc": "在敌人攻击命中前的瞬间举起此盾，可获得完美的防御。",
+  "item.alone_journey.parryshield.tooltip.parry_desc": "举盾 1 秒内格挡攻击：完全免疫，反弹 70% 伤害，并使攻击者虚弱 3 秒（盾反冷却 1 秒）",
+  "item.alone_journey.parryshield.tooltip.block_desc": "长时间举盾：吸收 80% 的伤害",
+
+  "item.alone_journey.painstrike_hammer": "痛击之锤",
+  "item.alone_journey.painstrike_hammer.tooltip.desc": "一把沉重的战锤，挥舞它需要付出节奏的代价。",
+  "item.alone_journey.painstrike_hammer.tooltip.charge_desc": "命中目标使其易伤 10 秒；重复命中延长 5 秒且易伤等级 +1。易伤每次使伤害提高 50% 后等级 -1，等级耗尽效果消失",
   "tab.alone_journey.curios": "孤独旅程：饰品",
-  "tooltip.alone_journey.press_shift": "按下 [Shift] 获取更多信息"
+  "tab.alone_journey.tools": "孤独旅程：工具",
+  "effect.alone_journey.vulnerability": "易伤"
 }

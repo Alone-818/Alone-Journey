@@ -123,33 +123,8 @@ public class ShieldEvent {
         ItemStack stack = slotResult.stack();
         CompoundTag tag = stack.getOrCreateTag();
 
-        // 动态检测玩家血量：基础最大护盾随当前最大生命值实时变化（替代首次佩戴时冻结的 NBT 值）
-        double baseMaxShield = crystalline_heart.getBaseMaxShield(player);
-        double maxShield = baseMaxShield + playerArmor / ARMOR_TO_SHIELD;
+        double maxShield = tag.getDouble(crystalline_heart.NB_TAG_MAX_SHIELD)+playerArmor/ARMOR_TO_SHIELD;
         double currentShield = tag.getDouble(crystalline_heart.NB_TAG_SHIELD);
-
-        boolean changed = false;
-        // 将动态计算的基础最大护盾同步到 NBT，便于客户端 GUI 等读取
-        if (Math.abs(tag.getDouble(crystalline_heart.NB_TAG_MAX_SHIELD) - baseMaxShield) > 1e-6) {
-            tag.putDouble(crystalline_heart.NB_TAG_MAX_SHIELD, baseMaxShield);
-            changed = true;
-        }
-        // 生命值降低导致护盾超出新上限时，削减护盾到新上限
-        if (currentShield > maxShield) {
-            currentShield = maxShield;
-            tag.putDouble(crystalline_heart.NB_TAG_SHIELD, currentShield);
-            changed = true;
-        }
-        if (changed) {
-            stack.setTag(tag);
-
-            // 写回槽位
-            String slotTypeId = slotResult.slotContext().identifier();
-            int index = slotResult.slotContext().index();
-            CuriosApi.getCuriosInventory(player).ifPresent(handler -> {
-                handler.setEquippedCurio(slotTypeId, index, stack);
-            });
-        }
 
         // 如果当前护盾已经满了，重置计时器为当前时间并返回
         if (currentShield >= maxShield) {
