@@ -43,6 +43,27 @@ public class Config {
                     "默认值: 0.05  (即每点护甲使冷却时间缩短 5%)")
                    .defineInRange("armorHealSpeedPercent", 0.05, 0.0, 1.0);
 
+    // 武器技能配置
+    private static final ForgeConfigSpec.IntValue CHAINSWOVERCLOCK_DURATION =
+            BUILDER.comment("链锯剑超频（振砍）技能持续时长（tick），20 tick = 1 秒",
+                    "默认值: 60  (3 秒)")
+                   .defineInRange("chainsword.overclockDuration", 60, 1, 1200);
+
+    private static final ForgeConfigSpec.IntValue CHAINSWOVERCLOCK_COOLDOWN =
+            BUILDER.comment("链锯剑超频技能冷却时长（tick），20 tick = 1 秒，从技能结束后开始计时",
+                    "默认值: 300  (15 秒)")
+                   .defineInRange("chainsword.overclockCooldown", 300, 0, 1200);
+
+    private static final ForgeConfigSpec.IntValue POWERSWORD_OVERCLOCK_DURATION =
+            BUILDER.comment("动力剑超频技能持续时长（tick），20 tick = 1 秒",
+                    "默认值: 260  (13 秒)")
+                   .defineInRange("powersword.overclockDuration", 260, 1, 1200);
+
+    private static final ForgeConfigSpec.IntValue POWERSWORD_OVERCLOCK_COOLDOWN =
+            BUILDER.comment("动力剑超频技能冷却时长（tick），20 tick = 1 秒，从技能结束后开始计时",
+                    "默认值: 300  (15 秒)")
+                   .defineInRange("powersword.overclockCooldown", 300, 0, 1200);
+
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static boolean logDirtBlock;
@@ -54,6 +75,12 @@ public class Config {
     public static double armorPerShieldMax;
     public static double toughnessPerDurationSec;
     public static double armorHealSpeedPercent;
+
+    // 武器技能变量（由配置文件加载）
+    public static int chainswordOverclockDuration;
+    public static int chainswordOverclockCooldown;
+    public static int powerswordOverclockDuration;
+    public static int powerswordOverclockCooldown;
 
     private static boolean validateItemName(final Object obj) {
         return obj instanceof final String itemName && ForgeRegistries.ITEMS.containsKey(new ResourceLocation(itemName));
@@ -72,5 +99,11 @@ public class Config {
         armorPerShieldMax = ARMOR_PER_SHIELD_MAX.get();
         toughnessPerDurationSec = TOUGHNESS_PER_DURATION_SEC.get();
         armorHealSpeedPercent = ARMOR_HEAL_SPEED_PERCENT.get();
+
+        // 加载武器技能配置
+        chainswordOverclockDuration = CHAINSWOVERCLOCK_DURATION.get();
+        chainswordOverclockCooldown = CHAINSWOVERCLOCK_COOLDOWN.get();
+        powerswordOverclockDuration = POWERSWORD_OVERCLOCK_DURATION.get();
+        powerswordOverclockCooldown = POWERSWORD_OVERCLOCK_COOLDOWN.get();
     }
 }

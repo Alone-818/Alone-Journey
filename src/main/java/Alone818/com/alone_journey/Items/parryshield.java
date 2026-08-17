@@ -1,6 +1,7 @@
 package Alone818.com.alone_journey.Items;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -19,10 +20,10 @@ import java.util.List;
 public class parryshield extends Item {
 
     // 配置常量
-    public static final int PARRY_WINDOW_TICKS = 20;        // 招架窗口：举盾小于此 tick 数（1 秒）内受击判定为招架
-    public static final float LONG_BLOCK_ABSORB = 0.8f;     // 长时间举盾时吸收的伤害比例（80%）
-    public static final float PARRY_REFLECT_RATIO = 0.7f;   // 招架成功时反弹给攻击者的伤害比例（70%）
-    public static final int WEAKNESS_DURATION_TICKS = 60;   // 招架成功后给予攻击者的虚弱时长（3 秒）
+    public static final int PARRY_WINDOW_TICKS = 10;        // 招架窗口：举盾小于此 tick 数（1 秒）内受击判定为招架
+    public static final float LONG_BLOCK_ABSORB = 0.2f;     // 长时间举盾时吸收的伤害比例（20%）
+    public static final float PARRY_REFLECT_RATIO = 2.5f;   // 招架成功时反弹给攻击者的伤害比例（70%）
+    public static final int WEAKNESS_DURATION_TICKS = 20;   // 招架成功后给予攻击者的虚弱时长（3 秒）
     public static final int WEAKNESS_AMPLIFIER = 0;         // 虚弱等级（0 = 虚弱 I）
     public static final int PARRY_COOLDOWN_TICKS = 20;      // 盾反冷却：招架成功后此 tick 数（1 秒）内无法再次招架
 
@@ -56,11 +57,18 @@ public class parryshield extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.alone_journey.parryshield.tooltip.desc")
-                .withStyle(ChatFormatting.AQUA));
-        tooltip.add(Component.translatable("item.alone_journey.parryshield.tooltip.parry_desc")
-                .withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable("item.alone_journey.parryshield.tooltip.block_desc")
-                .withStyle(ChatFormatting.GRAY));
+        if (Screen.hasShiftDown()) {
+            tooltip.add(Component.translatable("item.alone_journey.parryshield.tooltip.desc")
+                    .withStyle(ChatFormatting.AQUA));
+            tooltip.add(Component.translatable("item.alone_journey.parryshield.tooltip.parry_desc")
+                    .withStyle(ChatFormatting.GOLD));
+            tooltip.add(Component.translatable("item.alone_journey.parryshield.tooltip.block_desc")
+                    .withStyle(ChatFormatting.GRAY));
+        } else {
+            tooltip.add(Component.translatable("item.alone_journey.parryshield.tooltip.desc")
+                    .withStyle(ChatFormatting.AQUA));
+            tooltip.add(Component.translatable("tooltip.alone_journey.press_shift")
+                    .withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+        }
     }
 }

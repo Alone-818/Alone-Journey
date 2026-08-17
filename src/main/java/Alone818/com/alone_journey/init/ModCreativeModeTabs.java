@@ -57,6 +57,7 @@ public class ModCreativeModeTabs {
                                 output.accept(ModItems.PARRY_SHIELD.get());
                                 output.accept(ModItems.PAINSTRIKE_HAMMER.get());
                                 output.accept(ModItems.CHAINSWORD.get());
+                                output.accept(ModItems.POWERSWORD.get());
                             })
 
                             // 构建最终的 CreativeModeTab 实例。

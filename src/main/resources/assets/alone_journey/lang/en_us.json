@@ -33,9 +33,14 @@
   "item.alone_journey.painstrike_hammer.tooltip.charge_desc": "Hits inflict Vulnerability for 10s; repeat hits extend 5s and add +1 level. Each triggered hit deals +50% damage and removes one level",
   "item.alone_journey.chainsword": "Chainsaw Sword",
   "item.alone_journey.chainsword.tooltip.desc": "A mysterious imperial weapon from 39 millennia in the future, relying on serrated teeth to cut through foes.",
-  "item.alone_journey.chainsword.tooltip.laceration_desc": "Hits inflict Laceration II on the target (repeated hits stack the level, duration fixed at 3s; after 3s the damage settles once and the level is halved). Hold to enter Overclock mode.",
+  "item.alone_journey.chainsword.tooltip.laceration_desc": "Hits inflict Laceration I on the target (repeated hits stack the level, duration fixed at 1s; after 1s the damage settles once and the level is halved). Hold to enter Overclock mode; 15s cooldown after Overclock ends (duration and cooldown configurable).",
+  "item.alone_journey.powersword": "Power Sword",
+  "item.alone_journey.powersword.tooltip.desc": "A mysterious imperial weapon from 39 millennia in the future, driven by highly compressed energy; its strikes cut far beyond ordinary alloys.",
+  "item.alone_journey.powersword.tooltip.pierce_desc": "Armor Penetration: main hits ignore armor toughness; against targets with armor above 8, deals 0.3 extra damage per armor point over, and 0.5 per toughness point above 6 (max 10 combined); this bonus damage ignores armor and armor toughness",
+  "item.alone_journey.powersword.tooltip.overclock_desc": "Overclock: right-click to activate for 13s (5 durability cost); grants Resistance II for 5s on activation; while active, +6 attack damage, hits deal 3 extra fire damage and ignite the target for 4s, and 80% of damage dealt heals the wielder; 15s cooldown afterwards (duration and cooldown configurable)",
   "tab.alone_journey.curios": "Alone Journey: Curios",
   "tab.alone_journey.tools": "Alone Journey: Tools",
   "effect.alone_journey.vulnerability": "Vulnerability",
-  "effect.alone_journey.laceration": "Laceration"
+  "effect.alone_journey.laceration": "Laceration",
+  "tooltip.alone_journey.press_shift": "Hold [Shift] for details"
 }

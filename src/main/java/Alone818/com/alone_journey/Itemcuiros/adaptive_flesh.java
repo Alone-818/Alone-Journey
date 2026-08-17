@@ -1,6 +1,7 @@
 package Alone818.com.alone_journey.Itemcuiros;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,9 +20,16 @@ public class adaptive_flesh extends Item implements ICurioItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.alone_journey.adaptive_flesh.tooltip.desc")
-                .withStyle(ChatFormatting.GREEN));
-        tooltip.add(Component.translatable("item.alone_journey.adaptive_flesh.tooltip.mechanism_desc")
-                .withStyle(ChatFormatting.GRAY));
+        if (Screen.hasShiftDown()) {
+            tooltip.add(Component.translatable("item.alone_journey.adaptive_flesh.tooltip.desc")
+                    .withStyle(ChatFormatting.GREEN));
+            tooltip.add(Component.translatable("item.alone_journey.adaptive_flesh.tooltip.mechanism_desc")
+                    .withStyle(ChatFormatting.GRAY));
+        } else {
+            tooltip.add(Component.translatable("item.alone_journey.adaptive_flesh.tooltip.desc")
+                    .withStyle(ChatFormatting.GREEN));
+            tooltip.add(Component.translatable("tooltip.alone_journey.press_shift")
+                    .withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+        }
     }
 }

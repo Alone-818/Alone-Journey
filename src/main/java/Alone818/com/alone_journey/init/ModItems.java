@@ -4,6 +4,7 @@ import Alone818.com.alone_journey.Alone_journey;
 import Alone818.com.alone_journey.Items.chainsword;
 import Alone818.com.alone_journey.Items.painstrike_hammer;
 import Alone818.com.alone_journey.Items.parryshield;
+import Alone818.com.alone_journey.Items.powersword;
 import Alone818.com.alone_journey.Itemcuiros.adaptive_flesh;
 import Alone818.com.alone_journey.Itemcuiros.bleedingshield;
 import Alone818.com.alone_journey.Itemcuiros.night_contract;
@@ -31,6 +32,8 @@ public class ModItems {
             ITEMS.register("painstrike_hammer",()->new painstrike_hammer());
     public static final RegistryObject<Item> CHAINSWORD =
             ITEMS.register("chainsword",()->new chainsword());
+    public static final RegistryObject<Item> POWERSWORD =
+            ITEMS.register("powersword",()->new powersword());
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

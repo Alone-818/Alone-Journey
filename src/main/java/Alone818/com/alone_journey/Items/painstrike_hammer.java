@@ -4,6 +4,7 @@ import Alone818.com.alone_journey.init.ModEffects;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -73,9 +74,16 @@ public class painstrike_hammer extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.alone_journey.painstrike_hammer.tooltip.desc")
-                .withStyle(ChatFormatting.RED));
-        tooltip.add(Component.translatable("item.alone_journey.painstrike_hammer.tooltip.charge_desc")
-                .withStyle(ChatFormatting.GOLD));
+        if (Screen.hasShiftDown()) {
+            tooltip.add(Component.translatable("item.alone_journey.painstrike_hammer.tooltip.desc")
+                    .withStyle(ChatFormatting.RED));
+            tooltip.add(Component.translatable("item.alone_journey.painstrike_hammer.tooltip.charge_desc")
+                    .withStyle(ChatFormatting.GOLD));
+        } else {
+            tooltip.add(Component.translatable("item.alone_journey.painstrike_hammer.tooltip.desc")
+                    .withStyle(ChatFormatting.RED));
+            tooltip.add(Component.translatable("tooltip.alone_journey.press_shift")
+                    .withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+        }
     }
 }

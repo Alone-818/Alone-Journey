@@ -3,6 +3,7 @@ package Alone818.com.alone_journey.Itemcuiros;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -149,9 +150,13 @@ public class bleedingshield extends Item implements ICurioItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-
+        if (Screen.hasShiftDown()) {
             tooltip.add(Component.translatable("item.alone_journey.bleedingshield.tooltip.desc").withStyle(ChatFormatting.RED));
             tooltip.add(Component.translatable("item.alone_journey.bleedingshield.tooltip.toughness_desc").withStyle(ChatFormatting.GOLD));
-
+        } else {
+            tooltip.add(Component.translatable("item.alone_journey.bleedingshield.tooltip.desc").withStyle(ChatFormatting.RED));
+            tooltip.add(Component.translatable("tooltip.alone_journey.press_shift")
+                    .withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+        }
     }
 }

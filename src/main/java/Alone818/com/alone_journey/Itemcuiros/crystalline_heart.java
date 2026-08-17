@@ -4,6 +4,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -154,14 +155,17 @@ public class crystalline_heart extends Item implements ICurioItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-
+        if (Screen.hasShiftDown()) {
             tooltip.add(Component.translatable("item.alone_journey.crystalline_heart.tooltip.desc")
                     .withStyle(ChatFormatting.LIGHT_PURPLE));
             tooltip.add(Component.translatable("item.alone_journey.crystalline_heart.tooltip.heal_desc")
                     .withStyle(ChatFormatting.GRAY));
             tooltip.add(Component.translatable("item.alone_journey.crystalline_heart.tooltip.armor_bonus")
                     .withStyle(ChatFormatting.GRAY));
-
-
-
-            }}
+        } else {
+            tooltip.add(Component.translatable("item.alone_journey.crystalline_heart.tooltip.desc")
+                    .withStyle(ChatFormatting.LIGHT_PURPLE));
+            tooltip.add(Component.translatable("tooltip.alone_journey.press_shift")
+                    .withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+        }
+    }}
