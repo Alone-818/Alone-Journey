@@ -34,6 +34,7 @@ public class ModCreativeModeTabs {
                                 output.accept(ModItems.CRYSTALLINE_HEART.get());
                                 output.accept(ModItems.BLEEDINGSHIELD.get());
                                 output.accept(ModItems.ADAPTIVE_FLESH.get());
+                                output.accept(ModItems.NIGHT_CONTRACT.get());
                             })
 
                             // 构建最终的 CreativeModeTab 实例。
@@ -55,6 +56,7 @@ public class ModCreativeModeTabs {
                                            output) -> {
                                 output.accept(ModItems.PARRY_SHIELD.get());
                                 output.accept(ModItems.PAINSTRIKE_HAMMER.get());
+                                output.accept(ModItems.CHAINSWORD.get());
                             })
 
                             // 构建最终的 CreativeModeTab 实例。
