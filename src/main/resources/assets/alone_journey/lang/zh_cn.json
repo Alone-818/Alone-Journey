@@ -38,6 +38,8 @@
   "item.alone_journey.chainsword": "链锯剑",
   "item.alone_journey.chainsword.tooltip.desc": "来自 39 个千年后的神秘帝国武器，依靠锯齿切割敌人。",
   "item.alone_journey.chainsword.tooltip.laceration_desc": "命中时给予敌人撕裂 I 效果（反复命中叠加等级，时长固定为 1 秒，1 秒后结算一次伤害并等级减半）。长按进入超频模式，结束后技能冷却 15 秒（技能时长与冷却可配置）。",
+  "enchantment.alone_journey.meticulous_craft":"精工制造",
+  "enchantment.alone_journey.high_speed_slash":"高速切割",
   "item.alone_journey.powersword": "动力剑",
   "item.alone_journey.powersword.tooltip.desc": "来自 39 个千年后的神秘帝国武器，由高度压缩的能量驱动剑刃，斩击力度远超寻常合金。",
   "item.alone_journey.powersword.tooltip.pierce_desc": "穿甲：主攻击无视护甲韧性；对护甲值高于 8 的敌人每点超出护甲附加 0.3 点、韧性高于 6 每点附加 0.5 点额外伤害（合计最高 10 点），该伤害无视护甲与护甲韧性",
@@ -46,5 +48,6 @@
   "tab.alone_journey.tools": "孤独旅程：工具",
   "effect.alone_journey.vulnerability": "易伤",
   "effect.alone_journey.laceration": "撕裂",
-  "tooltip.alone_journey.press_shift": "按住 [Shift] 查看详细用法"
+  "tooltip.alone_journey.press_shift": "按住 [Shift] 查看详细用法",
+  "enchantment.alone_journey.meticulous_craft":"精工制造"
 }

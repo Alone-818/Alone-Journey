@@ -42,5 +42,6 @@
   "tab.alone_journey.tools": "Alone Journey: Tools",
   "effect.alone_journey.vulnerability": "Vulnerability",
   "effect.alone_journey.laceration": "Laceration",
-  "tooltip.alone_journey.press_shift": "Hold [Shift] for details"
+  "tooltip.alone_journey.press_shift": "Hold [Shift] for details",
+  "enchantment.alone_journey.meticulous_craft":"Meticulous craft"
 }

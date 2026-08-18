@@ -2,6 +2,7 @@ package Alone818.com.alone_journey.Items;
 
 import Alone818.com.alone_journey.Config;
 import Alone818.com.alone_journey.init.ModEffects;
+import Alone818.com.alone_journey.init.ModEnchantments;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -24,14 +25,19 @@ import java.util.List;
 
 public class chainsword extends SwordItem {
 
-    // 撕裂：命中后叠加等级（每次+1），时长固定为3秒（60 tick）。
-    // 撕裂3秒到期结算一次等同于等级数值的伤害。
-    public static final int LACERATION_DURATION_TICKS = 20;
+    // 普通攻击（左键）撕裂层数与时长
+    public static final int LACERATION_LEVELS_PER_ATTACK = 4;
+    public static final int LACERATION_DURATION_TICKS = 40; // 2秒
 
     // 长按振砍：每 N tick 挥砍一次
     public static final int SLASH_INTERVAL_TICKS = 2;
-    // 长按振砍每次伤害值（4.0 = 2 心）
-    public static final float SLASH_DAMAGE = 1F;
+    // 长按振砍每次伤害值（0.5 = 0.5 心）
+    public static final float SLASH_DAMAGE = 0.5F;
+    // 长按振砍每次叠加撕裂层数（基础为 1 层）
+    public static final int SLASH_LACERATION_LEVELS = 1;
+    // 高速切割附魔：右键每次伤害翻倍，叠加撕裂层数翻倍
+    public static final float HIGH_SPEED_SLASH_DAMAGE_MULTIPLIER = 2.0F;
+    public static final int HIGH_SPEED_SLASH_LACERATION_MULTIPLIER = 2;
     // 长按时长限制（秒）：3秒 = 60 tick（默认值，实际以配置 chainsword.overclockDuration 为准）
     public static final int MIN_USE_FOR_COOLDOWN_TICKS = 10;
     // 长按振砍扇形角度（90°）
@@ -88,7 +94,13 @@ public class chainsword extends SwordItem {
             return;
         }
         if (entity instanceof net.minecraft.world.entity.player.Player player && !player.level().isClientSide()) {
-            player.getCooldowns().addCooldown(this, Config.chainswordOverclockCooldown);
+            // 精工制造附魔：每级降低 10% 技能冷却
+            int smithingLevel = player.getMainHandItem().getEnchantmentLevel(ModEnchantments.METICULOUS_CRAFT.get());
+            int cooldown = Config.chainswordOverclockCooldown;
+            if (smithingLevel > 0) {
+                cooldown = (int) (cooldown * (1.0 - smithingLevel * 0.10));
+            }
+            player.getCooldowns().addCooldown(this, cooldown);
         }
     }
 
@@ -114,6 +126,12 @@ public class chainsword extends SwordItem {
                 )
         );
 
+        // 高速切割附魔：右键振砍伤害翻倍
+        int highSpeedLevel = stack.getEnchantmentLevel(ModEnchantments.HIGH_SPEED_SLASH.get());
+        float slashDamage = highSpeedLevel > 0
+                ? SLASH_DAMAGE * HIGH_SPEED_SLASH_DAMAGE_MULTIPLIER
+                : SLASH_DAMAGE;
+
         for (LivingEntity target : candidates) {
             if (target == entity) continue;
             if (target.isAlliedTo(entity)) continue;
@@ -124,7 +142,7 @@ public class chainsword extends SwordItem {
 
             // 造成低伤（无视无敌帧）
             target.invulnerableTime = 0;
-            target.hurt(entity.damageSources().playerAttack(player), SLASH_DAMAGE);
+            target.hurt(entity.damageSources().playerAttack(player), slashDamage);
             // 取消击退
             target.setDeltaMovement(0.0D, target.getDeltaMovement().y, 0.0D);
             // 叠加撕裂
@@ -143,17 +161,44 @@ public class chainsword extends SwordItem {
     }
 
     /**
-     * 命中实体时叠加撕裂等级（每次+1），持续时长固定为3秒。
-     * 撕裂3秒后结算一次等同于最终等级的伤害。
+     * 命中实体时叠加撕裂等级。
+     * 普通攻击（左键）时每次在基础等级上叠加4等级，时长2秒。
+     * 右键振砌期间每次叠加2等级。
+     * 高速切割附魔等级>=1时，右键振砌期间每次叠加4等级（翻倍）。
      */
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        int newAmplifier = 0;
-        MobEffectInstance existing = target.getEffect(ModEffects.LACERATION.get());
-        if (existing != null) {
-            // 在现有等级基础上+1
-            newAmplifier = existing.getAmplifier() + 1;
+        // 判断攻击者当前是否处于右键使用（振砌）状态
+        boolean isUsingSkill = attacker.isUsingItem()
+                && attacker.getUseItem() != null
+                && attacker.getUseItem().getItem() == this;
+
+        // 确定本次攻击的叠加等级：普通攻击4级，右键攻击2级
+        int levelsToAdd = LACERATION_LEVELS_PER_ATTACK;
+
+        // 高速切割附魔：右键振砌时撕裂层数翻倍（2->4）
+        if (isUsingSkill) {
+            int highSpeedLevel = stack.getEnchantmentLevel(ModEnchantments.HIGH_SPEED_SLASH.get());
+            if (highSpeedLevel > 0) {
+                levelsToAdd = LACERATION_LEVELS_PER_ATTACK * HIGH_SPEED_SLASH_LACERATION_MULTIPLIER;
+            } else {
+                levelsToAdd = 2;
+            }
         }
+
+        // 获取现有的撕裂效果
+        MobEffectInstance existing = target.getEffect(ModEffects.LACERATION.get());
+        int newAmplifier;
+
+        if (existing != null) {
+            // 在原有等级基础上继续叠加
+            newAmplifier = existing.getAmplifier() + levelsToAdd;
+        } else {
+            // 第一次叠加，从0开始（附魔等级以0为基准，4级对应amplifier=3）
+            newAmplifier = levelsToAdd - 1;
+        }
+
+        // 重置时长为2秒
         target.addEffect(new MobEffectInstance(
                 ModEffects.LACERATION.get(),
                 LACERATION_DURATION_TICKS,
@@ -163,6 +208,9 @@ public class chainsword extends SwordItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        // 计算METICULOUS_CRAFT附魔的伤害加成
+        int smithingLevel = stack.getEnchantmentLevel(ModEnchantments.METICULOUS_CRAFT.get());
+
         if (Screen.hasShiftDown()) {
             tooltip.add(Component.translatable("item.alone_journey.chainsword.tooltip.desc")
                     .withStyle(ChatFormatting.GREEN));

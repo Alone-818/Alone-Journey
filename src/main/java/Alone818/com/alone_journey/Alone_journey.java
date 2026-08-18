@@ -4,6 +4,7 @@ import Alone818.com.alone_journey.init.ModEffects;
 import Alone818.com.alone_journey.init.ModBlocks;
 import Alone818.com.alone_journey.init.ModCreativeModeTabs;
 import Alone818.com.alone_journey.init.ModEvents;
+import Alone818.com.alone_journey.init.ModEnchantments;
 import Alone818.com.alone_journey.init.ModItems;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
@@ -28,6 +29,7 @@ public class Alone_journey{
             ModBlocks.register(modEventBus);
             ModCreativeModeTabs.register(modEventBus);
             ModEffects.register(modEventBus);
+            ModEnchantments.register(modEventBus);
             //end region
 
             ModEvents.register();
