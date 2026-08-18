@@ -46,6 +46,7 @@
   "item.alone_journey.powersword.tooltip.overclock_desc": "超频：右键激活（默认持续 13 秒，损耗 5 点耐久），激活时获得抗性 II 持续 5 秒，期间攻击伤害 +6，命中额外造成 3 点火焰伤害并点燃 4 秒，攻击造成伤害的 80% 转化为自身治疗；使用后冷却 15 秒（时长与冷却可配置）",
   "tab.alone_journey.curios": "孤独旅程：饰品",
   "tab.alone_journey.tools": "孤独旅程：工具",
+  "tab.alone_journey.blocks": "孤独旅程：方块",
   "effect.alone_journey.vulnerability": "易伤",
   "effect.alone_journey.laceration": "撕裂",
   "tooltip.alone_journey.press_shift": "按住 [Shift] 查看详细用法",

@@ -1,6 +1,8 @@
 package Alone818.com.alone_journey.init;
 
 import Alone818.com.alone_journey.Alone_journey;
+import Alone818.com.alone_journey.init.ModBlocks;
+import Alone818.com.alone_journey.init.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -58,6 +60,26 @@ public class ModCreativeModeTabs {
                                 output.accept(ModItems.PAINSTRIKE_HAMMER.get());
                                 output.accept(ModItems.CHAINSWORD.get());
                                 output.accept(ModItems.POWERSWORD.get());
+                            })
+
+                            // 构建最终的 CreativeModeTab 实例。
+                            .build());
+
+    // 方块类物品的创造模式标签。
+    public static final RegistryObject<CreativeModeTab> ALONEBLOCK =
+            CREATIVE_MODE_TABS.register("alone_journey.blocks",
+                    () -> CreativeModeTab.builder()
+
+                            // 设置创造标签在界面中显示的图标。
+                            .icon(() -> new ItemStack(ModItems.OPERATING_TABLE.get()))
+
+                            // 设置标签的显示名称。
+                            .title(Component.translatable("tab.alone_journey.blocks"))
+
+                            // 定义该标签中显示的物品内容。
+                            .displayItems((itemDisplayParameters,
+                                           output) -> {
+                                output.accept(ModItems.OPERATING_TABLE.get());
                             })
 
                             // 构建最终的 CreativeModeTab 实例。

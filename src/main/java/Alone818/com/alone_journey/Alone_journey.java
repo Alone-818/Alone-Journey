@@ -1,5 +1,7 @@
 package Alone818.com.alone_journey;
 
+import Alone818.com.alone_journey.init.ModBlockEntities;
+import Alone818.com.alone_journey.init.ModBlocks;
 import Alone818.com.alone_journey.init.ModEffects;
 import Alone818.com.alone_journey.init.ModCreativeModeTabs;
 import Alone818.com.alone_journey.init.ModEvents;
@@ -25,7 +27,8 @@ public class Alone_journey{
             IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
             //start region
             ModItems.register(modEventBus);
-
+            ModBlocks.register(modEventBus);
+            ModBlockEntities.register(modEventBus);
             ModCreativeModeTabs.register(modEventBus);
             ModEffects.register(modEventBus);
             ModEnchantments.register(modEventBus);

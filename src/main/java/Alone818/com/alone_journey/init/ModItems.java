@@ -9,7 +9,9 @@ import Alone818.com.alone_journey.Itemcuiros.adaptive_flesh;
 import Alone818.com.alone_journey.Itemcuiros.bleedingshield;
 import Alone818.com.alone_journey.Itemcuiros.night_contract;
 import Alone818.com.alone_journey.Itemcuiros.crystalline_heart;
+import Alone818.com.alone_journey.init.ModBlocks;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.BlockItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -33,7 +35,14 @@ public class ModItems {
     public static final RegistryObject<Item> CHAINSWORD =
             ITEMS.register("chainsword",()->new chainsword());
     public static final RegistryObject<Item> POWERSWORD =
-            ITEMS.register("powersword",()->new powersword());
+            ITEMS.register("powersword",()-> new powersword());
+
+    // 手术台方块物品
+    public static final RegistryObject<Item> OPERATING_TABLE =
+            ITEMS.register("operating_table",
+                    () -> new BlockItem(ModBlocks.OPERATING_TABLE.get(),
+                            new Item.Properties()));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

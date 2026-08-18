@@ -40,6 +40,7 @@
   "item.alone_journey.powersword.tooltip.overclock_desc": "Overclock: right-click to activate for 13s (5 durability cost); grants Resistance II for 5s on activation; while active, +6 attack damage, hits deal 3 extra fire damage and ignite the target for 4s, and 80% of damage dealt heals the wielder; 15s cooldown afterwards (duration and cooldown configurable)",
   "tab.alone_journey.curios": "Alone Journey: Curios",
   "tab.alone_journey.tools": "Alone Journey: Tools",
+  "tab.alone_journey.blocks": "Alone Journey: Blocks",
   "effect.alone_journey.vulnerability": "Vulnerability",
   "effect.alone_journey.laceration": "Laceration",
   "tooltip.alone_journey.press_shift": "Hold [Shift] for details",
