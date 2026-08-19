@@ -3,6 +3,7 @@ package Alone818.com.alone_journey.init;
 import Alone818.com.alone_journey.Alone_journey;
 import Alone818.com.alone_journey.Items.chainsword;
 import Alone818.com.alone_journey.Items.operating_table;
+import Alone818.com.alone_journey.Items.void_miner;
 import Alone818.com.alone_journey.Items.painstrike_hammer;
 import Alone818.com.alone_journey.Items.parryshield;
 import Alone818.com.alone_journey.Items.powersword;
@@ -42,6 +43,10 @@ public class ModItems {
             ITEMS.register("operating_table",
                     () -> new operating_table());
 
+    // 虚空采矿机方块物品
+    public static final RegistryObject<Item> VOID_MINER =
+            ITEMS.register("void_miner",
+                    () -> new void_miner());
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

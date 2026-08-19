@@ -2,6 +2,7 @@ package Alone818.com.alone_journey.init;
 
 import Alone818.com.alone_journey.Alone_journey;
 import Alone818.com.alone_journey.blocks.OperatingTable;
+import Alone818.com.alone_journey.blocks.VoidMiner;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -15,6 +16,11 @@ public class ModBlocks {
     // 手术台方块
     public static final RegistryObject<Block> OPERATING_TABLE =
             BLOCKS.register("operating_table", OperatingTable::new);
+
+    // 虚空采矿机方块
+    public static final RegistryObject<Block> VOID_MINER =
+            BLOCKS.register("void_miner", VoidMiner::new);
+
 
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
