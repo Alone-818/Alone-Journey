@@ -64,6 +64,12 @@ public class ShieldHudOverlay {
         GameType gameType = mc.gameMode.getPlayerMode();
         if (gameType != GameType.SURVIVAL && gameType != GameType.ADVENTURE) return;
 
+        GuiGraphics gui = event.getGuiGraphics();
+        Font font = mc.font;
+        int screenWidth = mc.getWindow().getGuiScaledWidth();
+        int screenHeight = mc.getWindow().getGuiScaledHeight();
+
+        // ===== 显示护盾信息 =====
         // 从客户端同步的饰品 NBT 中读取护盾数据
         Optional<SlotResult> opt = CuriosApi.getCuriosHelper()
                 .findFirstCurio(player, ModItems.CRYSTALLINE_HEART.get());
@@ -92,11 +98,6 @@ public class ShieldHudOverlay {
         // 显示数值：剩余护盾点数（向上取整，半点也显示为 1）
         int shieldPoints = (int) Math.ceil(shield);
         String text = "*" + shieldPoints;
-
-        GuiGraphics gui = event.getGuiGraphics();
-        Font font = mc.font;
-        int screenWidth = mc.getWindow().getGuiScaledWidth();
-        int screenHeight = mc.getWindow().getGuiScaledHeight();
 
         // 原版血条首行心形位于 height - 39，护盾与血条同行、整体靠右对齐到血条左端的左侧
         int y = screenHeight - 39;

@@ -10,12 +10,16 @@ import Alone818.com.alone_journey.Itemcuiros.bleedingshield;
 import Alone818.com.alone_journey.Itemcuiros.night_contract;
 import Alone818.com.alone_journey.Itemcuiros.crystalline_heart;
 import Alone818.com.alone_journey.init.ModBlocks;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
@@ -42,6 +46,7 @@ public class ModItems {
             ITEMS.register("operating_table",
                     () -> new BlockItem(ModBlocks.OPERATING_TABLE.get(),
                             new Item.Properties()));
+
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
