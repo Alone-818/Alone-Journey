@@ -44,5 +44,18 @@
   "effect.alone_journey.vulnerability": "Vulnerability",
   "effect.alone_journey.laceration": "Laceration",
   "tooltip.alone_journey.press_shift": "Hold [Shift] for details",
-  "enchantment.alone_journey.meticulous_craft":"Meticulous craft"
+  "enchantment.alone_journey.meticulous_craft":"Meticulous craft",
+  "block.alone_journey.operating_table": "Operating Table",
+  "block.alone_journey.operating_table.tooltip.desc": "Used for surgery to enhance your body's abilities.",
+  "block.alone_journey.operating_table.tooltip.usage": "Right-click with empty hand to view current surgery levels",
+  "block.alone_journey.operating_table.tooltip.tab.armor": "§7[Armor Surgery] §f- Iron Ingot",
+  "block.alone_journey.operating_table.tooltip.armor_desc": "Per level: +2 Armor, +1 Armor Toughness",
+  "block.alone_journey.operating_table.tooltip.tab.damage": "§7[Damage Surgery] §f- Blaze Rod",
+  "block.alone_journey.operating_table.tooltip.damage_desc": "Per level: +10% Attack Damage, +15% Attack Speed",
+  "block.alone_journey.operating_table.tooltip.tab.speed": "§7[Speed Surgery] §f- End Crystal",
+  "block.alone_journey.operating_table.tooltip.speed_desc": "Per level: +10% Movement Speed, +15% Jump Height",
+  "block.alone_journey.operating_table.tooltip.tab.health": "§7[Health Surgery] §f- Golden Apple",
+  "block.alone_journey.operating_table.tooltip.health_desc": "Per level: +4 Max Health",
+  "block.alone_journey.operating_table.tooltip.tab.luck": "§7[Luck Surgery] §f- Amethyst Shard",
+  "block.alone_journey.operating_table.tooltip.luck_desc": "Per level: +2 Luck"
 }

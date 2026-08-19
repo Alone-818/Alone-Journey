@@ -213,6 +213,10 @@ public class SurgeryEffectEvent {
         // 提升手术等级
         data[surgeryType]++;
 
+        // 保存手术等级到NBT（持久化）
+        CompoundTag nbt = player.getPersistentData();
+        saveSurgeryLevelsToNbt(player, data);
+
         // 刷新属性
         refreshAttributes(player);
 
@@ -229,6 +233,32 @@ public class SurgeryEffectEvent {
         }
 
         return applySurgery(player, surgeryType, tableLevel);
+    }
+
+    /**
+     * 将手术等级数据保存到NBT
+     */
+    private static void saveSurgeryLevelsToNbt(Player player, int[] data) {
+        CompoundTag nbt = player.getPersistentData();
+        nbt.putInt("SurgeryArmorLevel", data[SURGERY_ARMOR]);
+        nbt.putInt("SurgeryDamageLevel", data[SURGERY_DAMAGE]);
+        nbt.putInt("SurgerySpeedLevel", data[SURGERY_SPEED]);
+        nbt.putInt("SurgeryHealthLevel", data[SURGERY_HEALTH]);
+        nbt.putInt("SurgeryLuckLevel", data[SURGERY_LUCK]);
+    }
+
+    /**
+     * 从NBT恢复手术等级数据
+     */
+    private static int[] loadSurgeryLevelsFromNbt(Player player) {
+        CompoundTag nbt = player.getPersistentData();
+        int[] data = new int[5];
+        data[SURGERY_ARMOR] = nbt.getInt("SurgeryArmorLevel");
+        data[SURGERY_DAMAGE] = nbt.getInt("SurgeryDamageLevel");
+        data[SURGERY_SPEED] = nbt.getInt("SurgerySpeedLevel");
+        data[SURGERY_HEALTH] = nbt.getInt("SurgeryHealthLevel");
+        data[SURGERY_LUCK] = nbt.getInt("SurgeryLuckLevel");
+        return data;
     }
 
     public static int stringToSurgeryType(String type) {
@@ -252,6 +282,8 @@ public class SurgeryEffectEvent {
     private static void applyFirstImmunity(Player player) {
         CompoundTag nbt = player.getPersistentData();
         nbt.putBoolean("SurgeryFirstImmunity", true);
+        // 添加尺寸放大效果（Scale = 0.5，表示放大 1.5 倍）
+        nbt.putDouble("SurgeryScale", 0.5);
         playerFirstImmunity.put(player.getUUID(), true);
         // 清除已有的负面效果
         for (net.minecraft.world.effect.MobEffect effect : IMMUNITY_EFFECTS) {
@@ -525,7 +557,7 @@ public class SurgeryEffectEvent {
 
             UUID originalId = original.getUUID();
 
-            // 移除玩家的手术等级数据（三个类型全部归零）
+            // 移除玩家的手术等级数据（所有类型全部归零）
             playerSurgeryData.remove(originalId);
 
             // 清除首次手术免疫状态（死亡后需要重新手术才能获得免疫）
@@ -534,7 +566,15 @@ public class SurgeryEffectEvent {
             // 清除NBT中的免疫标记
             newPlayer.getPersistentData().remove("SurgeryFirstImmunity");
 
-            // 刷新属性（清理残留的护甲/伤害/速度/跳跃修饰符）
+            // 清除NBT中的手术等级数据（用于重新加载时恢复）
+            CompoundTag nbt = newPlayer.getPersistentData();
+            nbt.remove("SurgeryArmorLevel");
+            nbt.remove("SurgeryDamageLevel");
+            nbt.remove("SurgerySpeedLevel");
+            nbt.remove("SurgeryHealthLevel");
+            nbt.remove("SurgeryLuckLevel");
+
+            // 刷新属性（清理残留的护甲/伤害/速度/跳跃/生命/幸运修饰符）
             refreshAttributes(newPlayer);
         }
     }
@@ -550,6 +590,15 @@ public class SurgeryEffectEvent {
 
         UUID playerId = player.getUUID();
         CompoundTag nbt = player.getPersistentData();
+
+        // 从NBT恢复手术等级数据
+        int[] data = loadSurgeryLevelsFromNbt(player);
+        // 只有当至少有一个手术等级大于0时才恢复
+        if (data[SURGERY_ARMOR] > 0 || data[SURGERY_DAMAGE] > 0 || data[SURGERY_SPEED] > 0
+                || data[SURGERY_HEALTH] > 0 || data[SURGERY_LUCK] > 0) {
+            playerSurgeryData.put(playerId, data);
+            refreshAttributes(player);
+        }
 
         // 从NBT恢复免疫状态
         boolean hasImmunity = nbt.getBoolean("SurgeryFirstImmunity");

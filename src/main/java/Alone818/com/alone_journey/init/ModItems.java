@@ -2,6 +2,7 @@ package Alone818.com.alone_journey.init;
 
 import Alone818.com.alone_journey.Alone_journey;
 import Alone818.com.alone_journey.Items.chainsword;
+import Alone818.com.alone_journey.Items.operating_table;
 import Alone818.com.alone_journey.Items.painstrike_hammer;
 import Alone818.com.alone_journey.Items.parryshield;
 import Alone818.com.alone_journey.Items.powersword;
@@ -9,17 +10,12 @@ import Alone818.com.alone_journey.Itemcuiros.adaptive_flesh;
 import Alone818.com.alone_journey.Itemcuiros.bleedingshield;
 import Alone818.com.alone_journey.Itemcuiros.night_contract;
 import Alone818.com.alone_journey.Itemcuiros.crystalline_heart;
-import Alone818.com.alone_journey.init.ModBlocks;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
@@ -44,8 +40,7 @@ public class ModItems {
     // 手术台方块物品
     public static final RegistryObject<Item> OPERATING_TABLE =
             ITEMS.register("operating_table",
-                    () -> new BlockItem(ModBlocks.OPERATING_TABLE.get(),
-                            new Item.Properties()));
+                    () -> new operating_table());
 
 
     public static void register(IEventBus eventBus) {
