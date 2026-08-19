@@ -1,8 +1,6 @@
 package Alone818.com.alone_journey.init;
 
 import Alone818.com.alone_journey.Alone_journey;
-import Alone818.com.alone_journey.init.ModBlocks;
-import Alone818.com.alone_journey.init.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -80,6 +78,7 @@ public class ModCreativeModeTabs {
                             .displayItems((itemDisplayParameters,
                                            output) -> {
                                 output.accept(ModItems.OPERATING_TABLE.get());
+                                output.accept(ModItems.VOID_MINER.get());
                             })
 
                             // 构建最终的 CreativeModeTab 实例。

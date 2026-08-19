@@ -58,16 +58,16 @@
   "block.alone_journey.operating_table.tooltip.tab.armor": "§7[护甲] §f- 铁锭",
   "block.alone_journey.operating_table.tooltip.armor_desc": "每级：+2 护甲值，+1 护甲韧性",
   "block.alone_journey.operating_table.tooltip.tab.damage": "§7[伤害] §f- 烈焰棒",
-  "block.alone_journey.operating_table.tooltip.damage_desc": "每级：+10% 攻击伤害，+15% 攻击速度",
+  "block.alone_journey.operating_table.tooltip.damage_desc": "每级：+5% 攻击伤害，+15% 攻击速度",
   "block.alone_journey.operating_table.tooltip.tab.speed": "§7[速度] §f- 末影水晶",
   "block.alone_journey.operating_table.tooltip.speed_desc": "每级：+10% 移动速度，+15% 跳跃高度",
   "block.alone_journey.operating_table.tooltip.tab.health": "§7[生命] §f- 金苹果",
   "block.alone_journey.operating_table.tooltip.health_desc": "每级：+4 生命上限",
   "block.alone_journey.operating_table.tooltip.tab.luck": "§7[幸运] §f- 紫水晶碎片",
   "block.alone_journey.operating_table.tooltip.luck_desc": "每/lucky级：+2 幸运值",
+
   "block.alone_journey.void_miner": "虚空采矿机",
   "block.alone_journey.void_miner.tooltip.desc": "自动采矿机，基于方块中心位置7×7范围，向上高5格的立方体区域",
-  "block.alone_journey.void_miner.tooltip.usage": "右键打开机械仓库查看内容",
-  "block.alone_journey.void_miner.tooltip.cycle": "采矿周期：10分钟",
-  "block.alone_journey.void_miner.tooltip.production": "产出：矿石 + 粗矿（粗矿产量为矿石的5倍）"
+  "block.alone_journey.void_miner.tooltip.cycle": "采矿周期：40分钟 不消耗矿石",
+  "block.alone_journey.void_miner.tooltip.production": "缓慢产出：矿锭,使用漏斗导出"
 }

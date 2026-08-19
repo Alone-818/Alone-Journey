@@ -81,7 +81,7 @@ public class SurgeryEffectEvent {
      */
     private static final double ARMOR_PER_LEVEL = 2.0;
     private static final double TOUGHNESS_PER_LEVEL = 1.0;
-    private static final double DAMAGE_PER_LEVEL = 0.10;
+    private static final double DAMAGE_PER_LEVEL = 0.05;
     private static final double ATTACK_SPEED_PER_LEVEL = 0.15;
     private static final double SPEED_PER_LEVEL = 0.10;
     private static final double JUMP_PER_LEVEL = 0.15;
@@ -618,31 +618,4 @@ public class SurgeryEffectEvent {
         return playerFirstImmunity.getOrDefault(player.getUUID(), false);
     }
 
-    /**
-     * 获取玩家的所有手术等级数据（用于持久化）
-     */
-    public static int[] getPlayerSurgeryData(UUID playerId) {
-        return playerSurgeryData.get(playerId);
-    }
-
-    /**
-     * 设置玩家的手术等级数据（用于持久化恢复）
-     */
-    public static void setPlayerSurgeryData(UUID playerId, int[] data) {
-        playerSurgeryData.put(playerId, data.clone());
-    }
-
-    /**
-     * 检查玩家是否拥有首次手术免疫（用于持久化恢复）
-     */
-    public static boolean getPlayerFirstImmunity(UUID playerId) {
-        return playerFirstImmunity.getOrDefault(playerId, false);
-    }
-
-    /**
-     * 设置玩家的首次手术免疫状态（用于持久化恢复）
-     */
-    public static void setPlayerFirstImmunity(UUID playerId, boolean immunity) {
-        playerFirstImmunity.put(playerId, immunity);
-    }
 }
