@@ -28,7 +28,6 @@ public class crystalline_heart extends Item implements ICurioItem {
     public static final String NB_TAG_MAX_SHIELD = "MaxShield";      // 最大护盾值（首次穿上时记录，防止无限刷盾）
     public static final String NB_TAG_SHIELD = "ShieldReduction";     // 当前护盾值
     public static final String NB_TAG_LAST_HEAL = "LastHealTime";     // 上次回复护盾时的世界时间（tick）
-    public static final String NB_TAG_HEALTH_REDUCTION = "HealthReduction"; // 已记录的生命值减少量
 
     // 配置常量
     private static final int PER_HEALTH_TO_SHIELD = 4;   // 每 4 点最大生命值可转化为 1 点护盾
@@ -113,31 +112,29 @@ public class crystalline_heart extends Item implements ICurioItem {
         double healthReduction = reducedMaxHealth * 4.0;
         return healthReduction / PER_HEALTH_TO_SHIELD;
     }
-
     @Override
-    public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
+    public void curioTick(SlotContext slotContext, ItemStack stack) {
         if (!(slotContext.entity() instanceof Player player)) return;
+        // NBT 只在服务端维护，客户端由 Curios 自动同步
+        if (player.level().isClientSide()) return;
 
         CompoundTag tag = stack.getOrCreateTag();
 
-        // 首次穿上时初始化：记录最大护盾和基础生命值减少量
-        if (!tag.contains(NB_TAG_MAX_SHIELD)) {
-            // 统一换算出减少后的最大生命值，不依赖 Curios 修饰符的应用时机
-            double reducedMaxHealth = getReducedMaxHealth(player);
-            // 被减少的生命值 = 原最大生命值 * 0.8 = 减少后最大生命值 * 4
-            double healthReduction = reducedMaxHealth * 4.0;
-            tag.putDouble(NB_TAG_HEALTH_REDUCTION, healthReduction);
-            // 最大护盾 = 被减少的生命值 / 4
-            double maxShield = healthReduction / PER_HEALTH_TO_SHIELD;
-            tag.putDouble(NB_TAG_MAX_SHIELD, maxShield);
-            // 初始护盾 = 最大护盾
-            tag.putDouble(NB_TAG_SHIELD, maxShield);
-            // 首次穿上时不设置 LastHealTime，等第一次受伤后开始计时
-            tag.remove(NB_TAG_LAST_HEAL);
+        // 首次穿上时初始化当前护盾；此后不再重复写入，避免每 tick 重写 NBT
+        if (!tag.contains(NB_TAG_SHIELD)) {
+            tag.putDouble(NB_TAG_SHIELD, 0);
         }
-        // 重新穿上（之前已穿过的物品）：不重置 MaxShield，防止刷盾
 
-        // 佩戴瞬间血量高于新上限（原最大生命值的 20%）时，扣血到新上限
+        // 最大护盾随玩家当前最大生命值动态变化，仅在数值变化时写入（供 HUD 读取）
+        double maxShield = getBaseMaxShield(player);
+        if (tag.getDouble(NB_TAG_MAX_SHIELD) != maxShield) {
+            tag.putDouble(NB_TAG_MAX_SHIELD, maxShield);
+        }
+
+        // 注意：这里绝不能清除 LastHealTime，否则 ShieldEvent 的回复计时会被每 tick 重置，
+        // 导致护盾永远无法回复
+
+        // 佩戴期间血量高于新上限（原最大生命值的 20%）时，扣血到新上限
         clampHealthToMax(player);
     }
 

@@ -50,7 +50,7 @@ public class painstrike_hammer extends Item {
             target.addEffect(new MobEffectInstance(
                     ModEffects.VULNERABILITY.get(),
                     existing.getDuration() + VULNERABILITY_EXTEND_TICKS,
-                    existing.getAmplifier() + 1,
+                    existing.getAmplifier() + 2,
                     existing.isAmbient(),
                     existing.isVisible(),
                     existing.showIcon()));

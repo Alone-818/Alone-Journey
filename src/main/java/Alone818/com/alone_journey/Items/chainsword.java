@@ -1,6 +1,7 @@
 package Alone818.com.alone_journey.Items;
 
 import Alone818.com.alone_journey.Config;
+import Alone818.com.alone_journey.events.TraumaEvent;
 import Alone818.com.alone_journey.init.ModEffects;
 import Alone818.com.alone_journey.init.ModEnchantments;
 import net.minecraft.ChatFormatting;
@@ -11,12 +12,16 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ToolAction;
 import org.jetbrains.annotations.Nullable;
@@ -29,12 +34,17 @@ public class chainsword extends SwordItem {
     public static final int LACERATION_LEVELS_PER_ATTACK = 4;
     public static final int LACERATION_DURATION_TICKS = 40; // 2秒
 
+    // 创伤层数：普通攻击（左键）每次叠加 2 层，长按振砍每次叠加 1 层
+    public static final int TRAUMA_LEVELS_PER_ATTACK = 2;
+    public static final int TRAUMA_LEVELS_PER_SLASH = 1;
+
     // 长按振砍：每 N tick 挥砍一次
     public static final int SLASH_INTERVAL_TICKS = 2;
-    // 长按振砍每次伤害值（0.5 = 0.5 心）
-    public static final float SLASH_DAMAGE = 0.5F;
+    // 长按振砍每次伤害 = 玩家攻击力 × Config.chainswordSlashDamageRatio + Config.chainswordSlashDamageFlat
     // 长按振砍每次叠加撕裂层数（基础为 1 层）
     public static final int SLASH_LACERATION_LEVELS = 1;
+    // 长按振砍叠加撕裂的概率（普通攻击必中，不受此概率影响）
+    public static final float SLASH_LACERATION_CHANCE = 0.3F;
     // 高速切割附魔：右键每次伤害翻倍，叠加撕裂层数翻倍
     public static final float HIGH_SPEED_SLASH_DAMAGE_MULTIPLIER = 2.0F;
     public static final int HIGH_SPEED_SLASH_LACERATION_MULTIPLIER = 2;
@@ -128,9 +138,13 @@ public class chainsword extends SwordItem {
 
         // 高速切割附魔：右键振砍伤害翻倍
         int highSpeedLevel = stack.getEnchantmentLevel(ModEnchantments.HIGH_SPEED_SLASH.get());
+        // 伤害 = 玩家攻击力 × 配置比例 + 配置固定值（玩家攻击力含手持武器加成）
+        float baseSlashDamage = (float) (player.getAttributeValue(Attributes.ATTACK_DAMAGE)
+                * Config.chainswordSlashDamageRatio
+                + Config.chainswordSlashDamageFlat);
         float slashDamage = highSpeedLevel > 0
-                ? SLASH_DAMAGE * HIGH_SPEED_SLASH_DAMAGE_MULTIPLIER
-                : SLASH_DAMAGE;
+                ? baseSlashDamage * HIGH_SPEED_SLASH_DAMAGE_MULTIPLIER
+                : baseSlashDamage;
 
         for (LivingEntity target : candidates) {
             if (target == entity) continue;
@@ -139,6 +153,12 @@ public class chainsword extends SwordItem {
             Vec3 toTarget = target.position().add(0.0D, target.getEyeHeight(), 0.0D).subtract(eyePos).normalize();
             double cosHalfArc = Math.cos(Math.toRadians(SLASH_ARC_DEGREES / 2.0F));
             if (lookDir.normalize().dot(toTarget) < cosHalfArc) continue;
+
+            // 视线检测：被方块阻挡（穿墙）则跳过该目标
+            Vec3 targetCenter = target.position().add(0.0D, target.getBbHeight() * 0.5D, 0.0D);
+            BlockHitResult blockHit = entity.level().clip(new ClipContext(
+                    eyePos, targetCenter, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity));
+            if (blockHit.getType() != HitResult.Type.MISS) continue;
 
             // 造成低伤（无视无敌帧）
             target.invulnerableTime = 0;
@@ -161,10 +181,11 @@ public class chainsword extends SwordItem {
     }
 
     /**
-     * 命中实体时叠加撕裂等级。
-     * 普通攻击（左键）时每次在基础等级上叠加4等级，时长2秒。
-     * 右键振砌期间每次叠加2等级。
+     * 命中实体时叠加撕裂与创伤等级。
+     * 撕裂：普通攻击（左键）必中，每次在基础等级上叠加4等级，时长2秒。
+     * 右键振砌期间每次有 30% 概率叠加2等级。
      * 高速切割附魔等级>=1时，右键振砌期间每次叠加4等级（翻倍）。
+     * 创伤：普通攻击每次叠加 2 层，右键长按振砍每次叠加 1 层。
      */
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
@@ -172,6 +193,14 @@ public class chainsword extends SwordItem {
         boolean isUsingSkill = attacker.isUsingItem()
                 && attacker.getUseItem() != null
                 && attacker.getUseItem().getItem() == this;
+
+        // 叠加创伤：普通攻击 2 层，长按振砍 1 层
+        TraumaEvent.applyOrStack(target, isUsingSkill ? TRAUMA_LEVELS_PER_SLASH : TRAUMA_LEVELS_PER_ATTACK);
+
+        // 长按振砍时撕裂只有 30% 概率叠加，普通攻击必中
+        if (isUsingSkill && attacker.getRandom().nextFloat() >= SLASH_LACERATION_CHANCE) {
+            return super.hurtEnemy(stack, target, attacker);
+        }
 
         // 确定本次攻击的叠加等级：普通攻击4级，右键攻击2级
         int levelsToAdd = LACERATION_LEVELS_PER_ATTACK;

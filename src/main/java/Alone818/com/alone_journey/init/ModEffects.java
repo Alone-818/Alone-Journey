@@ -2,6 +2,7 @@ package Alone818.com.alone_journey.init;
 
 import Alone818.com.alone_journey.Alone_journey;
 import Alone818.com.alone_journey.effects.LacerationEffect;
+import Alone818.com.alone_journey.effects.TraumaEffect;
 import Alone818.com.alone_journey.effects.VulnerabilityEffect;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -18,6 +19,9 @@ public class ModEffects {
 
     public static final RegistryObject<MobEffect> LACERATION =
             EFFECTS.register("laceration", LacerationEffect::new);
+
+    public static final RegistryObject<MobEffect> TRAUMA =
+            EFFECTS.register("trauma", TraumaEffect::new);
 
     public static void register(IEventBus eventBus) {
         EFFECTS.register(eventBus);

@@ -5,6 +5,7 @@
   "slots": [
     "belt",
     "body",
+    "head",
     "necklace"
   ]
 }

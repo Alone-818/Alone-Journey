@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "alone_journey:item/core_upgrade"
+  }
+}

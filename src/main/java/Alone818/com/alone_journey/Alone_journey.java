@@ -7,6 +7,7 @@ import Alone818.com.alone_journey.init.ModCreativeModeTabs;
 import Alone818.com.alone_journey.init.ModEvents;
 import Alone818.com.alone_journey.init.ModEnchantments;
 import Alone818.com.alone_journey.init.ModItems;
+import Alone818.com.alone_journey.init.ModMenus;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -29,6 +30,7 @@ public class Alone_journey{
             ModItems.register(modEventBus);
             ModBlocks.register(modEventBus);
             ModBlockEntities.register(modEventBus);
+            ModMenus.register(modEventBus);
             ModCreativeModeTabs.register(modEventBus);
             ModEffects.register(modEventBus);
             ModEnchantments.register(modEventBus);
@@ -43,6 +45,8 @@ public class Alone_journey{
             ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SPEC);
         }
 
-        private void commonSetup(final FMLCommonSetupEvent event) {}
+        private void commonSetup(final FMLCommonSetupEvent event) {
+            event.enqueueWork(Alone818.com.alone_journey.network.ModNetwork::register);
+        }
 
 }

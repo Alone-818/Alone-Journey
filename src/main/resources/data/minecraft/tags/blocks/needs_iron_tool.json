@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "alone_journey:operating_table",
+    "alone_journey:void_miner",
+    "alone_journey:fuel_generator",
+    "alone_journey:power_core",
+    "alone_journey:signal_pole",
+    "alone_journey:power_pylon"
+  ]
+}

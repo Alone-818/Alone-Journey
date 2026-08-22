@@ -1,6 +1,10 @@
 package Alone818.com.alone_journey.init;
 
+import Alone818.com.alone_journey.blockentities.FuelGeneratorBlockEntity;
 import Alone818.com.alone_journey.blockentities.OperatingTableBlockEntity;
+import Alone818.com.alone_journey.blockentities.PowerCoreBlockEntity;
+import Alone818.com.alone_journey.blockentities.PowerPylonBlockEntity;
+import Alone818.com.alone_journey.blockentities.SignalPoleBlockEntity;
 import Alone818.com.alone_journey.blockentities.VoidMinerBlockEntity;
 import Alone818.com.alone_journey.Alone_journey;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -22,6 +26,26 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("void_miner",
                     () -> BlockEntityType.Builder.of(VoidMinerBlockEntity::new,
                             ModBlocks.VOID_MINER.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<FuelGeneratorBlockEntity>> FUEL_GENERATOR =
+            BLOCK_ENTITIES.register("fuel_generator",
+                    () -> BlockEntityType.Builder.of(FuelGeneratorBlockEntity::new,
+                            ModBlocks.FUEL_GENERATOR.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<PowerCoreBlockEntity>> POWER_CORE =
+            BLOCK_ENTITIES.register("power_core",
+                    () -> BlockEntityType.Builder.of(PowerCoreBlockEntity::new,
+                            ModBlocks.POWER_CORE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<SignalPoleBlockEntity>> SIGNAL_POLE =
+            BLOCK_ENTITIES.register("signal_pole",
+                    () -> BlockEntityType.Builder.of(SignalPoleBlockEntity::new,
+                            ModBlocks.SIGNAL_POLE.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<PowerPylonBlockEntity>> POWER_PYLON =
+            BLOCK_ENTITIES.register("power_pylon",
+                    () -> BlockEntityType.Builder.of(PowerPylonBlockEntity::new,
+                            ModBlocks.POWER_PYLON.get()).build(null));
 
 
     public static void register(IEventBus eventBus) {

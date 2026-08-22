@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "part=0": {
+      "model": "alone_journey:block/signal_pole"
+    },
+    "part=1": {
+      "model": "alone_journey:block/signal_pole"
+    },
+    "part=2": {
+      "model": "alone_journey:block/signal_pole"
+    },
+    "part=3": {
+      "model": "alone_journey:block/signal_pole"
+    },
+    "part=4": {
+      "model": "alone_journey:block/signal_pole"
+    }
+  }
+}

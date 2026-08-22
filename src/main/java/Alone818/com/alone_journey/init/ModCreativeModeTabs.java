@@ -35,6 +35,7 @@ public class ModCreativeModeTabs {
                                 output.accept(ModItems.BLEEDINGSHIELD.get());
                                 output.accept(ModItems.ADAPTIVE_FLESH.get());
                                 output.accept(ModItems.NIGHT_CONTRACT.get());
+                                output.accept(ModItems.ENGINEER_GOGGLES.get());
                             })
 
                             // 构建最终的 CreativeModeTab 实例。
@@ -79,6 +80,16 @@ public class ModCreativeModeTabs {
                                            output) -> {
                                 output.accept(ModItems.OPERATING_TABLE.get());
                                 output.accept(ModItems.VOID_MINER.get());
+                                output.accept(ModItems.FUEL_GENERATOR.get());
+                                output.accept(ModItems.POWER_CORE.get());
+                                output.accept(ModItems.SIGNAL_POLE.get());
+                                output.accept(ModItems.POWER_PYLON.get());
+                                // 核心升级组件按等级顺序排列（等级N核心需 N+1 级组件）
+                                output.accept(ModItems.CORE_UPGRADE_1.get());
+                                output.accept(ModItems.CORE_UPGRADE_2.get());
+                                output.accept(ModItems.CORE_UPGRADE_3.get());
+                                output.accept(ModItems.CORE_UPGRADE_4.get());
+                                output.accept(ModItems.CORE_UPGRADE_5.get());
                             })
 
                             // 构建最终的 CreativeModeTab 实例。

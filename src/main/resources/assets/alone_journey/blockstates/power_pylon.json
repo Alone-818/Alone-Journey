@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "part=0": {
+      "model": "alone_journey:block/power_pylon"
+    },
+    "part=1": {
+      "model": "alone_journey:block/power_pylon"
+    },
+    "part=2": {
+      "model": "alone_journey:block/power_pylon"
+    },
+    "part=3": {
+      "model": "alone_journey:block/power_pylon"
+    },
+    "part=4": {
+      "model": "alone_journey:block/power_pylon"
+    }
+  }
+}

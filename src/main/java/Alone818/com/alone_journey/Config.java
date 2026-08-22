@@ -106,6 +106,18 @@ public class Config {
                     "默认值: 300  (15 秒)")
                    .defineInRange("chainsword.overclockCooldown", 300, 0, 1200);
 
+    private static final ForgeConfigSpec.DoubleValue CHAINSWOVERCLOCK_DAMAGE_RATIO =
+            BUILDER.comment("链锯剑右键振砍每次伤害占玩家攻击力的比例",
+                    "最终伤害 = 玩家攻击力 × 该比例 + 固定值",
+                    "默认值: 0.1  (持有链锯剑时玩家攻击力为 9，即 9 × 0.1 + 0.5 = 1.4)")
+                   .defineInRange("chainsword.slashDamageRatio", 0.1, 0.0, 10.0);
+
+    private static final ForgeConfigSpec.DoubleValue CHAINSWOVERCLOCK_DAMAGE_FLAT =
+            BUILDER.comment("链锯剑右键振砍每次伤害的固定值加成",
+                    "最终伤害 = 玩家攻击力 × 比例 + 该固定值",
+                    "默认值: 0.5")
+                   .defineInRange("chainsword.slashDamageFlat", 0.5, 0.0, 1000.0);
+
     private static final ForgeConfigSpec.IntValue POWERSWORD_OVERCLOCK_DURATION =
             BUILDER.comment("动力剑超频技能持续时长（tick），20 tick = 1 秒",
                     "默认值: 260  (13 秒)")
@@ -115,6 +127,27 @@ public class Config {
             BUILDER.comment("动力剑超频技能冷却时长（tick），20 tick = 1 秒，从技能结束后开始计时",
                     "默认值: 600  (30 秒)")
                    .defineInRange("powersword.overclockCooldown", 600, 0, 2400);
+
+    // 创伤效果配置
+    private static final ForgeConfigSpec.DoubleValue TRAUMA_DAMAGE_TAKEN_PER_LEVEL =
+            BUILDER.comment("每层创伤提高受到伤害的比例",
+                    "默认值: 0.01  (即每层 +1% 受到的伤害)")
+                   .defineInRange("trauma.damageTakenPerLevel", 0.01, 0.0, 10.0);
+
+    private static final ForgeConfigSpec.DoubleValue TRAUMA_MAGIC_DAMAGE_PER_LEVEL =
+            BUILDER.comment("每 0.5 秒每层创伤结算的魔法伤害",
+                    "默认值: 0.2  (即每层每 0.5 秒 0.2 点魔法伤害)")
+                   .defineInRange("trauma.magicDamagePerLevel", 0.2, 0.0, 1000.0);
+
+    private static final ForgeConfigSpec.IntValue TRAUMA_MAX_LAYERS =
+            BUILDER.comment("创伤最大层数",
+                    "默认值: 100")
+                   .defineInRange("trauma.maxLayers", 100, 1, 255);
+
+    private static final ForgeConfigSpec.IntValue TRAUMA_BASE_DURATION =
+            BUILDER.comment("创伤施加时的默认持续时长（tick），20 tick = 1 秒",
+                    "默认值: 100  (5 秒)")
+                   .defineInRange("trauma.baseDuration", 100, 20, 12000);
 
     public static final ForgeConfigSpec SPEC = BUILDER.build();
 
@@ -143,8 +176,16 @@ public class Config {
     // 武器技能变量（由配置文件加载）
     public static int chainswordOverclockDuration;
     public static int chainswordOverclockCooldown;
+    public static double chainswordSlashDamageRatio;
+    public static double chainswordSlashDamageFlat;
     public static int powerswordOverclockDuration;
     public static int powerswordOverclockCooldown;
+
+    // 创伤效果变量（由配置文件加载）
+    public static double traumaDamageTakenPerLevel;
+    public static double traumaMagicDamagePerLevel;
+    public static int traumaMaxLayers;
+    public static int traumaBaseDuration;
 
     private static boolean validateItemName(final Object obj) {
         return obj instanceof final String itemName && ForgeRegistries.ITEMS.containsKey(new ResourceLocation(itemName));
@@ -179,7 +220,15 @@ public class Config {
         // 加载武器技能配置
         chainswordOverclockDuration = CHAINSWOVERCLOCK_DURATION.get();
         chainswordOverclockCooldown = CHAINSWOVERCLOCK_COOLDOWN.get();
+        chainswordSlashDamageRatio = CHAINSWOVERCLOCK_DAMAGE_RATIO.get();
+        chainswordSlashDamageFlat = CHAINSWOVERCLOCK_DAMAGE_FLAT.get();
         powerswordOverclockDuration = POWERSWORD_OVERCLOCK_DURATION.get();
         powerswordOverclockCooldown = POWERSWORD_OVERCLOCK_COOLDOWN.get();
+
+        // 加载创伤效果配置
+        traumaDamageTakenPerLevel = TRAUMA_DAMAGE_TAKEN_PER_LEVEL.get();
+        traumaMagicDamagePerLevel = TRAUMA_MAGIC_DAMAGE_PER_LEVEL.get();
+        traumaMaxLayers = TRAUMA_MAX_LAYERS.get();
+        traumaBaseDuration = TRAUMA_BASE_DURATION.get();
     }
 }

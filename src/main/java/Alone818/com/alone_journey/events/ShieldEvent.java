@@ -126,9 +126,10 @@ public class ShieldEvent {
         double maxShield = tag.getDouble(crystalline_heart.NB_TAG_MAX_SHIELD)+playerArmor/ARMOR_TO_SHIELD;
         double currentShield = tag.getDouble(crystalline_heart.NB_TAG_SHIELD);
 
-        // 如果当前护盾已经满了，重置计时器为当前时间并返回
+        // 如果当前护盾已经满了，直接返回。
+        // 不在这里写 LastHealTime：受伤扣盾时 onLivingDamage 已记录时间，
+        // 每 tick 重复写 NBT 会造成不必要的存档脏标记与客户端同步
         if (currentShield >= maxShield) {
-            tag.putLong(crystalline_heart.NB_TAG_LAST_HEAL, level.getGameTime());
             return;
         }
 
